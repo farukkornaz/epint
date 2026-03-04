@@ -197,8 +197,8 @@ class ResponseModel:
             if key in properties:
                 prop_schema = properties[key]
                 
-                # Nested object kontrolü
-                if isinstance(value, dict) and 'properties' in prop_schema:
+                # prop_schema None ise 'in' operatörü hata vermesin
+                if isinstance(value, dict) and prop_schema and isinstance(prop_schema, dict) and 'properties' in prop_schema:
                     result[key] = self._convert_by_schema(value, prop_schema)
                 # Array kontrolü
                 elif isinstance(value, list) and prop_schema.get('type') == 'array':
